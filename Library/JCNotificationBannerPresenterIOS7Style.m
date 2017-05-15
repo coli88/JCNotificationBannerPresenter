@@ -7,7 +7,6 @@
 
 - (id) init {
   if (self = [super init]) {
-    self.bannerMaxWidth = 350.0;
     self.bannerHeight = 60.0;
   }
   return self;
@@ -33,9 +32,7 @@
   [banner getCurrentPresentingStateAndAtomicallySetPresentingState:YES];
 
   CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-  // Make the banner fill the width of the screen, minus any requested margins,
-  // up to self.bannerMaxWidth.
-  CGSize bannerSize = CGSizeMake(MIN(self.bannerMaxWidth, originalControllerView.bounds.size.width), self.bannerHeight);
+  CGSize bannerSize = CGSizeMake(originalControllerView.bounds.size.width, self.bannerHeight);
   // Center the banner horizontally.
   CGFloat x = (MAX(statusBarSize.width, statusBarSize.height) / 2) - (bannerSize.width / 2);
   // Position the banner offscreen vertically.
@@ -80,7 +77,7 @@
                    animations:^{
                      CGRect newFrame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
                      banner.frame = newFrame;
-                     banner.alpha = 0.9;
+                     banner.alpha = 1.0;
                    } completion:^(BOOL finished) {
                      // Empty.
                    }];

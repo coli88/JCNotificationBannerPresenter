@@ -7,7 +7,7 @@
 
 - (id) init {
   if (self = [super init]) {
-    self.bannerHeight = 60.0;
+    self.bannerHeight = 64.0;
   }
   return self;
 }

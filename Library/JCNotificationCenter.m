@@ -1,9 +1,8 @@
 #import "JCNotificationCenter.h"
 #import "JCNotificationBannerPresenter.h"
-#import "JCNotificationBannerPresenterIOSStyle.h"
 #import "JCNotificationBannerWindow.h"
 #import "JCNotificationBannerPresenter_Private.h"
-#import "JCNotificationBannerPresenterIOS7Style.h"
+#import "JCNotificationBannerPresenter.h"
 
 @interface JCNotificationCenter () {
 @private
@@ -23,7 +22,7 @@
     enqueuedNotifications = [NSMutableArray new];
     isPresentingMutex = [NSLock new];
     notificationQueueMutex = [NSObject new];
-    self.presenter = [[[self class] presenterClass] new];
+    self.presenter = [JCNotificationBannerPresenter new];
   }
   return self;
 }
@@ -37,29 +36,15 @@
   return sharedCenter;
 }
 
-+ (Class) presenterClass {
-  return [JCNotificationBannerPresenterIOS7Style class];
-}
-
-/** Adds notification with iOS banner Style to queue with given parameters. */
 + (void) enqueueNotificationWithTitle:(NSString*)title
                               message:(NSString*)message
+                                 icon:(UIImage*)image
                            tapHandler:(JCNotificationBannerTapHandlingBlock)tapHandler {
-  JCNotificationBanner* notification = [[JCNotificationBanner alloc] initWithTitle:title
+    JCNotificationBanner* notification = [[JCNotificationBanner alloc] initWithTitle:title
                                                                            message:message
+                                                                                icon:image
                                                                         tapHandler:tapHandler];
-  
-  [[self sharedCenter] enqueueNotification:notification];
-}
-
-- (void) enqueueNotificationWithTitle:(NSString*)title
-                              message:(NSString*)message
-                           tapHandler:(JCNotificationBannerTapHandlingBlock)tapHandler {
-  JCNotificationBanner* notification = [[JCNotificationBanner alloc]
-                                        initWithTitle:title
-                                        message:message
-                                        tapHandler:tapHandler];
-  [self enqueueNotification:notification];
+    [[JCNotificationCenter sharedCenter] enqueueNotification:notification];
 }
 
 - (void) enqueueNotification:(JCNotificationBanner*)notification {

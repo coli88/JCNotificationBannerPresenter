@@ -9,25 +9,18 @@
 
 - (JCNotificationBanner*) initWithTitle:(NSString*)_title
                                 message:(NSString*)_message
-                             tapHandler:(JCNotificationBannerTapHandlingBlock)_tapHandler {
-  
-  return [self initWithTitle:_title message:_message timeout:2.0 tapHandler:_tapHandler];
-}
-
-
-- (JCNotificationBanner*) initWithTitle:(NSString*)_title
-                                message:(NSString*)_message
-                                timeout:(NSTimeInterval)_timeout
-                             tapHandler:(JCNotificationBannerTapHandlingBlock)_tapHandler {
-  
-  self = [super init];
-  if (self) {
-    self.title = _title;
-    self.message = _message;
-    self.timeout = _timeout;
-    self.tapHandler = _tapHandler;
-  }
-  return self;
+                                   icon:(UIImage*)image
+                             tapHandler:(JCNotificationBannerTapHandlingBlock)_tapHandler
+{
+    self = [super init];
+    if (self) {
+        self.title = _title;
+        self.message = _message;
+        self.image = image;
+        self.timeout = 2.0;
+        self.tapHandler = _tapHandler;
+    }
+    return self;
 }
 
 @end
